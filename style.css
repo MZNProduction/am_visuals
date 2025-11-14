@@ -1,0 +1,471 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    background: black;
+    color: white;
+}
+
+/* Canvas background */
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-content {
+    text-align: center;
+    backdrop-filter: blur(2px);
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* H1 Text */
+.initials {
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.am {
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 200px;
+    letter-spacing: 3px;
+    color: #ffbd59;
+    margin: 0;
+    padding: 0;
+}
+
+.visuals {
+    font-family: 'Bantayog', sans-serif;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 50px;
+    text-transform: uppercase;
+    margin-top: -40px;
+    margin-bottom: 30px;
+    padding-left: 50px;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+/* Button */
+.btn {
+    padding: 12px 25px;
+    background: #111;
+    border: 1px solid #ffbd59;
+    color: #ffbd59;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: #ffbd59;
+    color: black;
+    transform: translateY(-2px);
+}
+
+/* Active Mode Button */
+.mode-btn.active {
+    background: #ffbd59;
+    color: black;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.modal-content {
+    background: #111;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    height: 80vh;
+    max-height: 700px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #ffbd59;
+    backdrop-filter: blur(5px);
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    position: relative;
+    z-index: 101;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Modal Header */
+.modal-header {
+    flex-shrink: 0;
+    margin-bottom: 20px;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+    position: relative;
+    z-index: 110;
+}
+
+/* Modal Body - Scrollable Area */
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    position: relative;
+}
+
+/* Custom Scrollbar for Modal Body */
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: #ffbd59;
+    border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: #ffa726;
+}
+
+/* Content Sections */
+.content-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    pointer-events: none;
+}
+
+.content-section.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    position: relative;
+}
+
+/* Info & Contact Section */
+.info-contact {
+    text-align: left;
+}
+
+.info-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 189, 89, 0.05);
+    border-radius: 10px;
+    border-left: 4px solid #ffbd59;
+}
+
+.info-section h2 {
+    color: #ffbd59;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.info-section p {
+    line-height: 1.6;
+    font-size: 15px;
+    text-align: justify;
+}
+
+.contact-section {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.contact-section h2 {
+    color: #ffbd59;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.contact-details p {
+    margin: 15px 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-details p::before {
+    font-size: 18px;
+}
+
+/* Gallery Content - Portrait Layout */
+.gallery-content.portrait-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 450px;
+    padding-right: 5px;
+    justify-items: center;
+}
+
+/* Custom Scrollbar for Gallery Content */
+.gallery-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.gallery-content::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 3px;
+}
+
+.gallery-content::-webkit-scrollbar-thumb {
+    background: #ffbd59;
+    border-radius: 3px;
+}
+
+/* Video Gallery */
+.video-gallery h3,
+.photo-gallery h3 {
+    margin-bottom: 20px;
+    color: #ffbd59;
+    font-size: 24px;
+}
+
+.video-gallery video {
+    width: 100%;
+    max-width: 220px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #000;
+}
+
+/* Photo Gallery */
+.photo-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: scale(1.05);
+}
+
+.photo-gallery img {
+    width: 100%;
+    max-width: 220px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #000;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.photo-gallery img:hover {
+    transform: scale(1.05);
+    border-color: #ffbd59;
+}
+
+/* Modal Footer */
+.modal-footer {
+    flex-shrink: 0;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.mode-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    min-width: 120px;
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: #ffbd59;
+    cursor: pointer;
+    z-index: 1001;
+    transition: color 0.3s ease;
+}
+
+.lightbox-close:hover {
+    color: #fff;
+}
+
+/* Lightbox Navigation */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 189, 89, 0.3);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+    z-index: 1001;
+}
+
+.lightbox-nav:hover {
+    background: rgba(255, 189, 89, 0.7);
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(255, 189, 89, 0.3);
+}
+
+.lightbox-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-caption span {
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .am {
+        font-size: 120px;
+    }
+    
+    .visuals {
+        font-size: 16px;
+        letter-spacing: 20px;
+    }
+    
+    .mode-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .mode-btn {
+        min-width: 100%;
+    }
+    
+    .info-section p {
+        font-size: 14px;
+    }
+    
+    .contact-details p {
+        font-size: 14px;
+    }
+}

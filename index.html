@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM Visuals</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bantayog:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background canvas -->
+    <canvas id="background"></canvas>
+
+    <!-- Main container -->
+    <div class="container">
+        <div class="center-content">
+            <h1 class="initials">
+                <span class="am">AM</span><br>
+                <span class="visuals">visuals</span>
+            </h1>
+            <button id="openModal" class="btn">Enter</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="closeModal" class="close">&times;</span>
+            </div>
+
+            <div class="modal-body">
+                <!-- Info & Contact Section -->
+                <div id="infoContact" class="content-section info-contact active">
+                    <!-- Info Section -->
+                    <div class="info-section">
+                        <h2>About Me</h2>
+                        <p>My name is Anastasios Mazanis. I am a videographer, photographer, and editor, specializing in
+                            creating engaging visual content for social media. From dynamic ads to cooking reels and
+                            vidcasts, I craft projects that tell a story and capture attention. I am passionate about
+                            turning your ideas into high-quality visual results. Feel free to reach out to me via email or
+                            my social media channels to discuss your concept, collaborate, and bring your vision to life.
+                        </p>
+                    </div>
+                    
+                    <!-- Contact Section -->
+                    <div class="contact-section">
+                        <h2>Contact</h2>
+                        <div class="contact-details">
+                            <p>📧 Email: anastasios.mazanis@gmail.com</p>
+                            <p>📷 Instagram: @anastasios.mazanis</p>
+                            <p>📞 Phone: Via email after consultation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Gallery Section -->
+                <div id="videoGallery" class="content-section video-gallery">
+                    <h3>Video Projects</h3>
+                    <div class="gallery-content portrait-layout">
+                        <video controls>
+                            <source src="video1.mp4" type="video/mp4">
+                            Το πρόγραμμα περιήγησής σας δεν υποστηρίζει βίντεο.
+                        </video>
+                        <video controls>
+                            <source src="video2.mp4" type="video/mp4">
+                            Το πρόγραμμα περιήγησής σας δεν υποστηρίζει βίντεο.
+                        </video>
+                        <video controls>
+                            <source src="video3.mp4" type="video/mp4">
+                            Το πρόγραμμα περιήγησής σας δεν υποστηρίζει βίντεο.
+                        </video>
+                    </div>
+                </div>
+
+                <!-- Photo Gallery Section -->
+                <div id="photoGallery" class="content-section photo-gallery">
+                    <h3>Photo Gallery</h3>
+                    <div class="gallery-content portrait-layout">
+                        <div class="photo-item">
+                            <img src="/ASSETS/PHOTOS/FOOD 2.jpg" alt="Food Photography 1">
+                        </div>
+                        <div class="photo-item">
+                            <img src="/ASSETS/PHOTOS/FOOD 3.jpg" alt="Food Photography 2">
+                        </div>
+                        <div class="photo-item">
+                            <img src="/ASSETS/PHOTOS/BEVERAGE 1.jpg" alt="Beverage Photography 1">
+                        </div>
+                        <div class="photo-item">
+                            <img src="/ASSETS/PHOTOS/BEVERAGE 2.jpg" alt="Beverage Photography 2">
+                        </div>
+                        <div class="photo-item">
+                            <img src="/ASSETS/PHOTOS/BEVERAGE 3.jpg" alt="Beverage Photography 3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="mode-buttons">
+                    <button id="infoModeBtn" class="btn mode-btn active">Info Mode</button>
+                    <button id="videoModeBtn" class="btn mode-btn">Video Mode</button>
+                    <button id="photoModeBtn" class="btn mode-btn">Photo Mode</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <button class="lightbox-nav lightbox-prev">&#10094;</button>
+        <button class="lightbox-nav lightbox-next">&#10095;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-caption">
+            <span id="lightbox-caption-text"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
