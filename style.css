@@ -246,10 +246,6 @@ body {
     gap: 10px;
 }
 
-.contact-details p::before {
-    font-size: 18px;
-}
-
 /* Gallery Content - Portrait Layout */
 .gallery-content.portrait-layout {
     display: grid;
@@ -355,6 +351,7 @@ body {
     z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease;
+    touch-action: pan-y;
 }
 
 .lightbox.active {
@@ -391,6 +388,7 @@ body {
     border-radius: 50%;
     transition: background 0.3s ease;
     z-index: 1001;
+    display: block;
 }
 
 .lightbox-nav:hover {
@@ -411,6 +409,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
 }
 
 .lightbox-content img {
@@ -419,6 +418,7 @@ body {
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 0 30px rgba(255, 189, 89, 0.3);
+    transition: transform 0.3s ease;
 }
 
 .lightbox-caption {
@@ -434,6 +434,30 @@ body {
 
 .lightbox-caption span {
     font-size: 16px;
+}
+
+/* Swipe hint για mobile */
+.lightbox-swipe-hint {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: none;
+}
+
+.lightbox.active .lightbox-swipe-hint {
+    opacity: 1;
+    animation: fadeHint 3s ease-in-out 1;
+}
+
+@keyframes fadeHint {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.7; }
 }
 
 /* Responsive Design */
@@ -467,5 +491,52 @@ body {
     
     .contact-details p {
         font-size: 14px;
+    }
+
+    /* Mobile Lightbox Styles */
+    .lightbox-nav {
+        display: none;
+    }
+    
+    .lightbox-swipe-hint {
+        display: block;
+    }
+    
+    .lightbox-close {
+        top: 15px;
+        right: 20px;
+        font-size: 35px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .lightbox-content {
+        max-width: 95%;
+        max-height: 85%;
+    }
+    
+    .lightbox-caption {
+        bottom: 60px;
+        padding: 8px;
+    }
+    
+    .lightbox-caption span {
+        font-size: 14px;
+    }
+}
+
+/* Desktop Styles */
+@media (min-width: 769px) {
+    .lightbox-nav {
+        display: block;
+    }
+    
+    .lightbox-swipe-hint {
+        display: none;
     }
 }
