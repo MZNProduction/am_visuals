@@ -121,6 +121,13 @@ const lightboxClose = document.querySelector('.lightbox-close');
 const lightboxPrev = document.querySelector('.lightbox-prev');
 const lightboxNext = document.querySelector('.lightbox-next');
 
+// Swipe variables
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+const minSwipeDistance = 50;
+
 // Current active mode
 let currentMode = 'info';
 let currentPhotoIndex = 0;
@@ -226,12 +233,90 @@ function openLightbox(src, alt) {
     lightboxCaption.textContent = alt;
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    // Add swipe event listeners only for mobile
+    if (window.innerWidth <= 768) {
+        addSwipeListeners();
+    }
 }
 
 // Close lightbox function
 function closeLightbox() {
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
+    
+    // Remove swipe event listeners
+    removeSwipeListeners();
+}
+
+// Add swipe event listeners
+function addSwipeListeners() {
+    lightbox.addEventListener('touchstart', handleTouchStart, { passive: true });
+    lightbox.addEventListener('touchmove', handleTouchMove, { passive: true });
+    lightbox.addEventListener('touchend', handleTouchEnd, { passive: true });
+}
+
+// Remove swipe event listeners
+function removeSwipeListeners() {
+    lightbox.removeEventListener('touchstart', handleTouchStart);
+    lightbox.removeEventListener('touchmove', handleTouchMove);
+    lightbox.removeEventListener('touchend', handleTouchEnd);
+}
+
+// Swipe handlers
+function handleTouchStart(event) {
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+}
+
+function handleTouchMove(event) {
+    // Prevent default to avoid scrolling while swiping
+    event.preventDefault();
+}
+
+function handleTouchEnd(event) {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+    handleSwipe();
+}
+
+function handleSwipe() {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+    
+    // Check if it's a horizontal swipe (not vertical scroll)
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+        if (deltaX > 0) {
+            // Swipe right - previous photo
+            showPrevPhoto();
+        } else {
+            // Swipe left - next photo
+            showNextPhoto();
+        }
+    }
+}
+
+// Lightbox navigation functions
+function showNextPhoto() {
+    currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+    updateLightboxImage();
+}
+
+function showPrevPhoto() {
+    currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+    updateLightboxImage();
+}
+
+function updateLightboxImage() {
+    lightboxImg.src = photos[currentPhotoIndex].src;
+    lightboxCaption.textContent = photos[currentPhotoIndex].alt;
+    
+    // Add a subtle animation when changing images
+    lightboxImg.style.opacity = '0';
+    setTimeout(() => {
+        lightboxImg.style.opacity = '1';
+        lightboxImg.style.transition = 'opacity 0.3s ease';
+    }, 50);
 }
 
 // Lightbox event listeners
@@ -243,19 +328,9 @@ lightbox.addEventListener('click', function(e) {
     }
 });
 
-// Lightbox navigation
+// Desktop navigation with buttons
 lightboxPrev.addEventListener('click', showPrevPhoto);
 lightboxNext.addEventListener('click', showNextPhoto);
-
-function showNextPhoto() {
-    currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
-    openLightbox(photos[currentPhotoIndex].src, photos[currentPhotoIndex].alt);
-}
-
-function showPrevPhoto() {
-    currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
-    openLightbox(photos[currentPhotoIndex].src, photos[currentPhotoIndex].alt);
-}
 
 // Keyboard navigation
 document.addEventListener('keydown', function(e) {
@@ -266,6 +341,17 @@ document.addEventListener('keydown', function(e) {
             showNextPhoto();
         } else if (e.key === 'ArrowLeft') {
             showPrevPhoto();
+        }
+    }
+});
+
+// Handle window resize - update swipe listeners if needed
+window.addEventListener('resize', function() {
+    if (lightbox.classList.contains('active')) {
+        // If lightbox is open, update swipe listeners based on current screen size
+        removeSwipeListeners();
+        if (window.innerWidth <= 768) {
+            addSwipeListeners();
         }
     }
 });
